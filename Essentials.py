@@ -45,13 +45,23 @@ def initiate_figure(shape:tuple, titles = None, xlabels = None, ylabels = None):
     fig, ax = plt.subplots(nrows,ncols, figsize = (6 * ncols, 4 * nrows), 
                            constrained_layout = True)
     
-    for i,axis in enumerate(ax.ravel()):
-        if titles != None and titles[i] != '':
-            axis.set_title(titles[i])
-        if xlabels != None and xlabels[i] != '':
-            axis.set_xlabel(xlabels[i])
-        if ylabels != None and ylabels[i] != '':
-            axis.set_ylabel(ylabels[i])
+    if nrows * ncols > 1:
+        for i,axis in enumerate(ax.ravel()):
+            if titles != None and titles[i] != '':
+                axis.set_title(titles[i])
+            if xlabels != None and xlabels[i] != '':
+                axis.set_xlabel(xlabels[i])
+            if ylabels != None and ylabels[i] != '':
+                axis.set_ylabel(ylabels[i])
+    else:
+        try:
+            ax.set_title(titles[0])
+            ax.set_xlabel(xlabels[0])
+            ax.set_ylabel(ylabels[0])
+        except IndexError:
+            ax.set_title(titles)
+            ax.set_xlabel(xlabels)
+            ax.set_ylabel(ylabels)
             
     return fig, ax
 
